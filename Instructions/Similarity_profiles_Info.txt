@@ -1,0 +1,38 @@
+Similarity_Profiles_Information:
+We denote the 2 author names to be compared as A, B. We must have same lastname and first initial values for A, B due to blocking applied as a preprocessing step.
+1. Author_fname: It captures the first name similarity.
+   i.e. 0, if fnA, fnB are full names, & fnA != fnB 
+        3, if fnA, fnB are full names, & fnA = fnB 
+        2, otherwise
+ Note: by construction of blocks, we must have initA = initB; therefore, the last case corresponds to fnA, fnB are not full names and initA != initB.
+2. Author_midname: It captures the middle name similarity
+   i.e. 0, if midA, midB are present, & midA != midB 
+        3, if midA, midB are present, & midA = midB 
+        2, otherwise
+3. Author_lname_IDF: It is the IDF of the author’s last name. author lname IDF = log(IDF(lnameA)). Recollect the last names of all authors in a block are identical.
+4. Auth_suffix: It is 1 if both the author names have suffixes and they are identical, 0 otherwise.
+5. Affl_jaccard: It is the Jaccard similarity between the affiliation strings afflA, afflB.
+6. Affl_tfidf: It is the TF-IDF similarity between the affiliation strings afflA, afflB.
+7. Affl_soft_tfidf: It is the soft TF-IDF similarity between the affiliation strings afflA, afflB.
+8. Affl_org_jaccard: It is the Jaccard similarity between the organization in the affiliation strings afflA, afflB. The organization is extracted using Stanford NER tool
+9. Affl_dept_jaccard: It is the Jaccard similarity between the departments of the affiliation strings afflA, afflB. The departments are extracted by regular expressions.
+10. Affl_location_jaccard: It is the Jaccard similarity between the locations of the affiliation strings afflA, afflB. The locations are extracted using GeoNames database.
+11. Affl_email: It is 1 if the email ids match exactly, 0 otherwise.
+12. Coauth_lname_shared: It is the number of coauthor names (each in LNFI format) shared between the two papers. Coauth_shared = |coauthA ∩ coauthB|.
+13. Coauth_lname_idf: It is the sum of IDF of all shared coauthor last names. 
+     Let shared = Coauth_lnameA ∩ coauth_lnameB. Then, coauth lname idf = Σ(log(IDF(i))) where i∈shared.
+14. Coauth_jaccard: It is the Jaccard similarity between the coauthor names of the 2 papers.
+15. Mesh_shared: It is the number of MeSH terms shared between the 2 papers. 
+16. Mesh_shared idf: It is the IDF of the shared MeSH terms. 
+17. Mesh_tree_shared: It is the number of shared terms in MeSH tree.
+18. Mesh_tree_shared_idf: It is the IDF of the shared MeSH tree terms.
+19. Journal_shared_idf: It is the IDF of the shared journal name if both are published in the same journal. 
+20. Journal_year: Major changes occurred in MEDLINE in 1988 and 2002 regarding addition of full names and affiliations. This feature tracks when the two papers were published respect to the partition: before 1988, 1988–2002, after 2002. 
+21. Journal_year_diff: It is the difference in the publication years of the 2 papers. 
+     Journal_year_diff = |yearA – yearB|.
+22. Title_jaccard: It is the Jaccard similarity between titleA and titleB where titleA and titleB are titles of the paper. Here, we lowercase the words, remove stop words and stem the words before finding the Jaccard score.
+23. Title_bigram_jaccard: It is the Jaccard similarity between bigrams in each of titleA and titleB. We lowercase the words, remove stopwords and stem the words before finding the bigrams. 
+24. Title_embedding_cosine: It is the cosine similarity of the BERT embeddings of the titles. 
+25. Abstract_jaccard: It is the Jaccard similarity between abstractA and abstractB where abstractA and abstractB are abstract of the paper. Here, we lowercase the words, remove stopwords, and stem the words before finding the Jaccard score. 
+26. Abstract_embedding_cosine: It is the cosine similarity between BERT embeddings of abstractA and abstractB.
+27. Target: 0 if A, B are different, else 1.

@@ -1,0 +1,33 @@
+1. Create a directory PubMedAND as follows: mkdir PubMedAND
+2. Download Authors_Metadata.zip, Similarity_profile_generation.py, ... to PubMedAND
+3. Move to PubMedAND: cd PubMedAND
+4. Extract Authors_Metadata.zip and copy all the 76 xlsx file in author_features folder:
+   	unzip ../Authors_Metadata.zip
+   	cp ../PubMedAND/*.xlsx ../author_features/
+   	rm -rf ../Authors_Metadata.zip
+	cd ..
+5. Run similarity_profile_generation.py: To generate pairwise comparison between author of same lastname_firstinitial
+	Command to run: python3 similarity_profile_generation.py
+	Input: 	i. All xslx file from author_features folder
+		ii. 2018MeShTreeHierarchy.xml
+		iii. Metadata_frequency folder
+	Output:	i. Generate xlsx file in Similarity_profile folder
+6. Run combine_author.py: To generate training_dataset in csv and xlsx format
+	Command to run: python3 combine_author.py
+	Input:	i. All xlsx file from Similarity_profile folder
+	Output:	i. Train_dataset.xlsx
+		ii. Train_dataset.csv
+7. A) Run RF_Validation_And_Testing.py: To generate Random Forest Result
+   	Command to run: python3 RF_Validation_And_Testing.py
+	Input:	Train_dataset.csv
+   	Output:	Generates logs and graph showing results of the model
+   B) Run GBT_Validation_And_Testing.py: To generate Gradient Boosted Tree Result
+   	Command to run: python3 GBT_Validation_And_Testing.py
+	Input:	Train_dataset.csv
+   	Output:	Generates logs and graph showing results of the model
+   C) Run Pre_Recall_RF_And_GBT.py: Compare Random Forest and Gradient Boosted Tree Model
+   	Command to run: python3 Pre_Recall_RF_And_GBT.py
+	Input:	Train_dataset.csv
+   	Output:	Generates logs and graph showing results of the model
+
+Note: There is no command line input. All inputs are already coded in the script.

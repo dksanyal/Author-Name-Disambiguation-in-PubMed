@@ -1,0 +1,21 @@
+Author_Metadeta:
+1. Pmid 
+2. Lastname
+3. Firstname
+4. Middlename
+5. FirstInitial
+6. Suffix
+7. Title
+8. Affiliation
+9. Email
+10. Co-Author
+11. Abstract
+12. MeshTerm
+13. Journal
+14. Year
+15. Lang
+16. Unique Author ID
+17. Department
+18. Organization
+19. Location
+Note: 17 & 18 are extracted using Standford NER Tool and 19 is extracted using Geonames website. 
