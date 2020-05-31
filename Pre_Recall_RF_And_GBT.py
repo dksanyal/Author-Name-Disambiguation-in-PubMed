@@ -15,13 +15,13 @@ with open("config.json") as json_file:
 
 OUTPUT_PATH=''	
 for files in parsed_json:
-	if(files['python_file']==os.path.realpath(__file__).split("\\")[-1]):
+	if(files['python_file']=="Pre_Recall_RF_And_GBT.py":
 		OUTPUT_PATH = files['xlsxfile']
         
 #5 7 3 4 5 1 2 1
 HEADERS = ["field_1st_author","field_2nd_author","author_fname",    "author_midname", "auth_suffix", "author_lname_IDF",
            "affl_email","affl_jaccard", "affl_tfidf",  "affl_softtfidf", "affl_dept_jaccard", "affl_org_jaccard","affl_location_jaccard",
-           "coauth_lname_shared",    "coauth_lname_idf",    "coauth_jaccard",
+           "coauth_lname_shared",    "coauth_lname_idf",    "coauth_jaccard", "coauth_lname_finitial_jaccard",
            "mesh_shared", "mesh_shared_idf",    "mesh_tree_shared", "mesh_tree_shared_idf",
            "journal_shared_idf", "journal_year", "journal_year_diff",
            "abstract_jaccard",

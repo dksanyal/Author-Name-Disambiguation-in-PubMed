@@ -4,6 +4,10 @@
 		"xlsxfile" : "Train_dataset.csv"	
 	},
 	{
+		"python_file" : "random_forest_filewise.py",
+		"xlsxfile" : "Train_dataset.csv"	
+	},
+	{
 		"python_file" : "GBT_Validation_And_Testing.py",
 		"xlsxfile" : "Train_dataset.csv"	
 	},

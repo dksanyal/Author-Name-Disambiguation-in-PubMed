@@ -49,7 +49,13 @@ def removestopword(words):
 result = []
 
 def common_elements(list1, list2):
-    return [element for element in list1 if element in list2]
+    common = []
+    for i in range(0,len(list1)):
+        for j in range(0,len(list2)):
+            if(list1[i]==list2[j]):
+                common.append(list1[i])
+                break
+    return common
 
 def auth_fst(authorA, authorB):
     if(authorA[2]=='' or authorB[2]==''):
@@ -289,6 +295,14 @@ def get_lname_author(coauthorA,coauthorB):
     #print(common)
     return common
 
+print("Loading Coauthor Lastname Frequency")
+wbcoauth = load_workbook(filename="Metadata_frequency/coauthor_frequency.xlsx")
+sheetcoauth = wbcoauth.worksheets[0]
+kcoauth = dict()
+for i in range(1,sheetcoauth.max_row+1):
+    kcoauth[str(sheetcoauth.cell(row= i, column=1).value).lower()] = sheetcoauth.cell(row= i, column=2).value
+
+
 def coauth_lname_shared(coauthorA,coauthorB):
     coauthorA = coauthorA.lower()
     coauthorB = coauthorB.lower()
@@ -298,6 +312,7 @@ def coauth_lname_shared(coauthorA,coauthorB):
     coauthorB.pop(len(coauthorB)-1)
         
     common = get_lname_author(coauthorA,coauthorB)
+    #print(common)
     return len(common)
 
 def coauth_lname_idf(coauthorA, coauthorB):
@@ -308,24 +323,20 @@ def coauth_lname_idf(coauthorA, coauthorB):
     coauthorB.pop(len(coauthorB)-1)
     common = list(common_elements(coauthorA,coauthorB))
     sum1=0
-    onecoauthor = []
+    # Extracting the last name of common author
     for i in range(0,len(common)):
-        onecoauthor.append(common[i]) 
-        found=0
-        for j in range (0, len(data)):
-            coauthor = data[j][9]
-            coauthor = coauthor.split('||')
-            coauthor.pop(len(coauthor)-1)
-            
-            mylist = get_lname_author(coauthor,onecoauthor)
-            found += len(mylist )
-            priauthor = data[j][1] + ' ' + data[j][4]
-            if(priauthor == common[i]):
-                found += 1
-        sum1 += math.log(len(data)/found)
+        common[i] = common[i].split()[0]
+    #print('check ', common)
+    
+    for i in range(0,len(common)):
+        try:
+            coauthidf = kcoauth.get('totalcoauth')/kcoauth.get(str(common[i]))
+        except:
+            coauthidf=1
+        sum1 += math.log( coauthidf )
     
     return sum1
-
+    
 def coauth_lname_jac(coauthorA,coauthorB,comlen):
     if(coauthorA=='' or coauthorB==''):
         return 0
@@ -334,6 +345,16 @@ def coauth_lname_jac(coauthorA,coauthorB,comlen):
     coauthorA.pop(len(coauthorA)-1)
     coauthorB.pop(len(coauthorB)-1)
     return ( comlen / (len(coauthorA) + len(coauthorB) ) )
+
+def coauth_lnamefi_jac(coauthorA,coauthorB):
+    if(coauthorA=='' or coauthorB==''):
+        return 0
+    coauthorA = coauthorA.split('||')
+    coauthorB = coauthorB.split('||')
+    coauthorA.pop(len(coauthorA)-1)
+    coauthorB.pop(len(coauthorB)-1)
+    common = list(common_elements(coauthorA,coauthorB))
+    return ( len(common) / (len(coauthorA) + len(coauthorB) ) )
 
 def splitmesh(orimeshA):
     meshA=[]
@@ -361,8 +382,6 @@ for i in range(1,sheetmesh.max_row+1):
     kmesh[str(sheetmesh.cell(row= i, column=1).value)] = sheetmesh.cell(row= i, column=2).value
 
 def mesh_shared_idf(orimeshA, orimeshB):
-    #orimeshA=orimeshA.lower()
-    #orimeshB=orimeshB.lower()
     
     meshA=splitmesh(orimeshA)
     meshB=splitmesh(orimeshB)
@@ -640,9 +659,12 @@ def coauthor_similarity(author,similarity):
     lname_idf = coauth_lname_idf(author[0][9],author[1][9])
     #the jaccord similarity between couthA and coauthB
     lname_jac = coauth_lname_jac(author[0][9],author[1][9],lname_shared)
+    lnamefi_jac = coauth_lnamefi_jac(author[0][9],author[1][9])
+    
     similarity.append(lname_shared)
     similarity.append(lname_idf)
     similarity.append(lname_jac)
+    similarity.append(lnamefi_jac)
     
     
 def concept_similarity(author,similarity):
@@ -774,21 +796,21 @@ def main(authorname):
                 similarity.append(str(data[j][1] + " " + data[j][4] + "_" + data[j][15]))
                 
                 #author similarity
-                author_similarity(author,similarity)
+                #author_similarity(author,similarity)
                 #affiliation similarity
-                affiliation_similarity(author,similarity)
+                #affiliation_similarity(author,similarity)
                 #coauthor similarity
                 coauthor_similarity(author,similarity)
                 #concept similarity with the help of mesh term
-                concept_similarity(author,similarity)
+                #concept_similarity(author,similarity)
                 #journal similarity
-                journal_similarity(author, similarity)
+                #journal_similarity(author, similarity)
                 #abstract similarity
-                abstract_jac = abstract_similarity(author,similarity)
-                similarity.append(abstract_jac)
+                #abstract_jac = abstract_similarity(author,similarity)
+                #similarity.append(abstract_jac)
                 #title similarity
-                title_similarity(author, similarity)
-                title_abstract_embedding(author, similarity)
+                #title_similarity(author, similarity)
+                #title_abstract_embedding(author, similarity)
                 # Result whether those two are same or not
                 same=0
                 orcidcell1 = data[i][15]

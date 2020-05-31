@@ -1,23 +1,24 @@
 1. Create a directory PubMedAND as follows: mkdir PubMedAND
-2. Download Authors_Metadata.zip, Similarity_profile_generation.py, ... to PubMedAND
+2. After Downloading, move all extracted files i.e. Authors_Metadata.zip, Similarity_profile_generation.py, author_details.py, etc. in PubMed folder.
 3. Move to PubMedAND: cd PubMedAND
-4. Extract Authors_Metadata.zip and copy all the 76 xlsx file in author_features folder:
-   	unzip ../Authors_Metadata.zip
-   	cp ../PubMedAND/*.xlsx ../author_features/
-   	rm -rf ../Authors_Metadata.zip
-	cd ..
-5. Run similarity_profile_generation.py: To generate pairwise comparison between author of same lastname_firstinitial
+4. Create a directory author_features as follows: mkdir author_features
+5. Create a directory Similarity_profile as follows: mkdir Similarity_profile
+6. Extract Authors_Metadata.zip and copy all the 76 xlsx file in author_features folder:
+   	unzip Authors_Metadata.zip
+   	mv *.xlsx author_features/
+   	rm -rf Authors_Metadata.zip
+7. Run similarity_profile_generation.py: To generate pairwise comparison between author of same lastname_firstinitial
 	Command to run: python3 similarity_profile_generation.py
 	Input: 	i. All xslx file from author_features folder
 		ii. 2018MeShTreeHierarchy.xml
 		iii. Metadata_frequency folder
 	Output:	i. Generate xlsx file in Similarity_profile folder
-6. Run combine_author.py: To generate training_dataset in csv and xlsx format
+8. Run combine_author.py: To generate training_dataset in csv and xlsx format
 	Command to run: python3 combine_author.py
 	Input:	i. All xlsx file from Similarity_profile folder
 	Output:	i. Train_dataset.xlsx
 		ii. Train_dataset.csv
-7. A) Run RF_Validation_And_Testing.py: To generate Random Forest Result
+9. A) Run RF_Validation_And_Testing.py: To generate Random Forest Result
    	Command to run: python3 RF_Validation_And_Testing.py
 	Input:	Train_dataset.csv
    	Output:	Generates logs and graph showing results of the model
