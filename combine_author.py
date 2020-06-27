@@ -18,11 +18,14 @@ wb1.save(target_filename)
 wbtrain = load_workbook(target_filename)
 sheettrain = wbtrain.worksheets[0]
 
-header = ["field_1st_author","field_2nd_author","author_fname","author_midname","auth_suffix","author_lname_IDF",
-        "affl_email,affl_jaccard","affl_tfidf","affl_softtfidf","affl_dept_jaccard","affl_org_jaccard","affl_location_jaccard",
-        "coauth_lname_shared","coauth_lname_idf","coauth_jaccard","coauth_lname_finitial_jaccard","mesh_shared","mesh_shared_idf","mesh_tree_shared","mesh_tree_shared_idf",
-        "journal_shared_idf","journal_year","journal_year_diff",
-        "abstract_jaccard","title_jaccard","title_bigram_jaccard","title_embedding_cosine","abstract_embedding_cosine","target"]
+#6 7 3 4 5 1 2 1
+header = ["field_1st_author","field_2nd_author","author_fname",    "author_midname", "auth_suffix", "author_lname_IDF",
+           "affl_email","affl_jaccard", "affl_tfidf",  "affl_softtfidf", "affl_dept_jaccard", "affl_org_jaccard","affl_location_jaccard",
+           "coauth_lname_shared",    "coauth_lname_idf",    "coauth_jaccard", "coauth_lname_finitial_jaccard",
+           "mesh_shared", "mesh_shared_idf",    "mesh_tree_shared", "mesh_tree_shared_idf",
+           "journal_shared_idf", "journal_year", "journal_year_diff",
+           "abstract_jaccard",
+           "title_jaccard","title_bigram_jaccard", "title_embedding_cosine", "abstract_embedding_cosine", "target"]
 #adding header 
 for i in range(0,len(header)):
     sheettrain.cell(row = 1, column = i+1).value = header[i]

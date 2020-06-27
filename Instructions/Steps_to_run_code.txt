@@ -3,7 +3,7 @@
 3. Move to PubMedAND: cd PubMedAND
 4. Create a directory author_features as follows: mkdir author_features
 5. Create a directory Similarity_profile as follows: mkdir Similarity_profile
-6. Extract Authors_Metadata.zip and copy all the 76 xlsx file in author_features folder:
+6. Extract Author_Metadata.zip and copy all the 76 xlsx file in author_features folder:
    	unzip Authors_Metadata.zip
    	mv *.xlsx author_features/
    	rm -rf Authors_Metadata.zip

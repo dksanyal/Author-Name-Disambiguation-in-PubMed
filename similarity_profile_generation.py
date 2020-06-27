@@ -694,8 +694,6 @@ def journal_similarity(author, similarity):
     year_diff = jour_year_diff(author[0][13],author[1][13])
     
     similarity.append(shared_idf)
-    similarity.append(lang)
-    similarity.append(lang_idf)
     similarity.append(year)
     similarity.append(year_diff)
 
@@ -796,21 +794,21 @@ def main(authorname):
                 similarity.append(str(data[j][1] + " " + data[j][4] + "_" + data[j][15]))
                 
                 #author similarity
-                #author_similarity(author,similarity)
+                author_similarity(author,similarity)
                 #affiliation similarity
-                #affiliation_similarity(author,similarity)
+                affiliation_similarity(author,similarity)
                 #coauthor similarity
                 coauthor_similarity(author,similarity)
                 #concept similarity with the help of mesh term
-                #concept_similarity(author,similarity)
+                concept_similarity(author,similarity)
                 #journal similarity
-                #journal_similarity(author, similarity)
+                journal_similarity(author, similarity)
                 #abstract similarity
-                #abstract_jac = abstract_similarity(author,similarity)
-                #similarity.append(abstract_jac)
+                abstract_jac = abstract_similarity(author,similarity)
+                similarity.append(abstract_jac)
                 #title similarity
-                #title_similarity(author, similarity)
-                #title_abstract_embedding(author, similarity)
+                title_similarity(author, similarity)
+                title_abstract_embedding(author, similarity)
                 # Result whether those two are same or not
                 same=0
                 orcidcell1 = data[i][15]
